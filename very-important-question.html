@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>very important question</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        
+        body {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            background-color: pink;
+            transition: background 1s;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+        .container {
+            position: relative;
+        }
+        #image-placeholder img {
+            width: 300px;
+            height: auto;
+        }
+        #question {
+            font-size: 56px;
+            margin-top: 20px;
+            color: red;
+            position: relative;
+            z-index: 2;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            position: relative;
+        }
+        .button {
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            font-family: 'Dancing Script', cursive;
+            background-color: lightyellow;
+            border: 2px solid red;
+            border-radius: 10px;
+            color: purple;
+            transition: font-size 0.3s ease;
+        }
+        #yes-button {
+            z-index: 3;
+        }
+        #no-button {
+            z-index: 2;
+        }
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            opacity: 0.7;
+            animation: confetti linear infinite;
+        }
+        @keyframes fireworks {
+            0% { opacity: 1; transform: scale(0); }
+            100% { opacity: 0; transform: scale(1.5); }
+        }
+        .firework {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            border-radius: 50%;
+            opacity: 0;
+            animation: fireworks 1s ease-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="image-placeholder">
+            <img src="cat.png">
+        </div>
+        <p id="question">Shine Jung, will you be my Valentine?</p>
+        <div class="button-container">
+            <button id="yes-button" class="button" onclick="acceptLove()">Yes of course my king</button>
+            <button id="no-button" class="button" onclick="rejectLove()">No, you're too late</button>
+        </div>
+    </div>
+    
+    <audio id="music" src="cat.mp3"></audio>
+
+    <script>
+        function acceptLove() {
+            document.body.style.animation = "soft-flash 1s infinite alternate";
+            document.getElementById("image-placeholder").innerHTML = '<img src="spinningcat.gif" width="1400">';
+            document.getElementById("music").play();
+            document.getElementById("question").innerText = "very gude";
+            document.getElementById("yes-button").remove();
+            document.getElementById("no-button").remove();
+            startCelebration();
+            startFireworks();
+        }
+
+        function rejectLove() {
+            document.getElementById("question").innerText = "No, it's not";
+            document.getElementById("yes-button").innerText = "Yeah, you're right";
+            document.getElementById("no-button").innerText = "Yes, it is";
+            document.getElementById("no-button").setAttribute("onclick", "shrinkChoice()");
+            document.getElementById("yes-button").setAttribute("onclick", "acceptLove()");
+        }
+
+        function shrinkChoice() {
+            var yesButton = document.getElementById('yes-button');
+            yesButton.style.fontSize = parseFloat(window.getComputedStyle(yesButton).fontSize) * 2 + 'px';
+            yesButton.style.position = 'relative';
+            yesButton.style.zIndex = '10';
+        }
+
+        function startCelebration() {
+            setInterval(() => {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+                confetti.style.width = Math.random() * 10 + 5 + "px";
+                confetti.style.height = confetti.style.width;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }, 100);
+        }
+        
+        function startFireworks() {
+            setInterval(() => {
+                let firework = document.createElement("div");
+                firework.classList.add("firework");
+                firework.style.left = Math.random() * 100 + "vw";
+                firework.style.top = Math.random() * 100 + "vh";
+                firework.style.animationDuration = Math.random() * 1.5 + 0.5 + "s";
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1500);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
